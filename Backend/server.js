@@ -4,7 +4,7 @@ import axios from 'axios';
 import cors from 'cors';
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middlewares
 app.use(cors());
@@ -12,7 +12,7 @@ app.use(express.json());
 
 // NASA NEO API
 const NASA_API_URL = 'https://api.nasa.gov/neo/rest/v1/neo/browse';
-const NASA_API_KEY = 'msAY493IhVmfHxJVHSQQDBjiqmM55NbOpsMe02gx';
+const NASA_API_KEY = process.env.NASA_API_KEY;
 
 // Cache storage
 let cachedAsteroids = [];
@@ -29,6 +29,10 @@ async function loadAsteroids() {
     let totalPages = 1;
 
     // Loop through pages (limit to first 5 pages to avoid huge fetch)
+    if (!NASA_API_KEY) {
+      throw new Error('NASA_API_KEY is not set. Provide it via environment variables.');
+    }
+
     while (page < totalPages && page < 5) {
       const response = await axios.get(`${NASA_API_URL}?page=${page}&size=20&api_key=${NASA_API_KEY}`);
       const data = response.data;
