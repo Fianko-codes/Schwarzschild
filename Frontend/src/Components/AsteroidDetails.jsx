@@ -11,14 +11,12 @@ function AsteroidDetails() {
     fetchAsteroidDetails,
     selectedAsteroid,
 
-    type,
     speed,
     xdistance,
     ydistance,
     zdistance,
     size,
 
-    setType,
     setSpeed,
     setX,
     setY,
@@ -32,8 +30,11 @@ function AsteroidDetails() {
     runSimulation,
   } = useAsteroidStore();
 
-  const [selectedName, setSelectedName] = useState(selectedAsteroid?.name || "");
+  const [selectedName, setSelectedName] = useState(
+    selectedAsteroid?.name || ""
+  );
   const [onOrbit, setOnOrbit] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // ---- Load asteroid list on mount ----
   useEffect(() => {
@@ -90,6 +91,13 @@ function AsteroidDetails() {
     });
   }
 
+  const filteredAsteroids =
+    searchQuery.trim().length === 0
+      ? asteroids
+      : asteroids.filter((ast) =>
+          ast.name?.toLowerCase().includes(searchQuery.trim().toLowerCase())
+        );
+
   // ---- Render ----
   return (
     <div className="flex-1 p-8">
@@ -99,8 +107,18 @@ function AsteroidDetails() {
         </h2>
 
         <form className="space-y-4">
-          {/* --- Dropdown: Select Asteroid --- */}
+          {/* --- Search + Dropdown: Select Asteroid --- */}
           <div>
+            <label className="block text-neutral-300 font-semibold mb-1">
+              Search Asteroid
+            </label>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Start typing a name..."
+              className="w-full p-2 rounded bg-neutral-700 text-neutral-100 border border-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-500 mb-3"
+            />
             <label className="block text-neutral-300 font-semibold mb-1">
               Select Asteroid
             </label>
@@ -111,32 +129,18 @@ function AsteroidDetails() {
             >
               {loadingAsteroids ? (
                 <option value="">Loading asteroids...</option>
+              ) : filteredAsteroids.length === 0 ? (
+                <option value="">No asteroids match your search</option>
               ) : (
                 <>
                   <option value="">-- Choose an asteroid --</option>
-                  {asteroids.map((ast) => (
+                  {filteredAsteroids.map((ast) => (
                     <option key={ast.name} value={ast.name}>
                       {ast.name}
                     </option>
                   ))}
                 </>
               )}
-            </select>
-          </div>
-
-          {/* --- Type --- */}
-          <div>
-            <label className="block text-neutral-300 font-semibold mb-1">
-              Type
-            </label>
-            <select
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              className="w-full p-2 rounded bg-neutral-700 text-neutral-100 border border-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-500"
-            >
-              <option value="A">A-type</option>
-              <option value="B">B-type</option>
-              <option value="C">C-type</option>
             </select>
           </div>
 

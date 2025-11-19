@@ -105,8 +105,10 @@ export default function OrbitSimulation() {
     renderer.domElement.addEventListener('wheel', onWheel, { passive: false });
 
     // Earth
+    const textureloader = new THREE.TextureLoader();
+    const earthTexture = textureloader.load('./earth_texture.jpg');
     const earthGeo = new THREE.SphereGeometry(radEarth, 64, 32);
-    const earthMat = new THREE.MeshStandardMaterial({ color: 0x2233ff });
+    const earthMat = new THREE.MeshStandardMaterial({ map: earthTexture });
     const earth = new THREE.Mesh(earthGeo, earthMat);
     scene.add(earth);
 
@@ -117,7 +119,7 @@ export default function OrbitSimulation() {
 
     // Asteroid
     const asteroidGeo = new THREE.SphereGeometry(radAst, 15, 7);
-    const asteroidMat = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+    const asteroidMat = new THREE.MeshStandardMaterial({ color: 0x999999 });
     const asteroid = new THREE.Mesh(asteroidGeo, asteroidMat);
     scene.add(asteroid);
 
