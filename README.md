@@ -38,3 +38,13 @@ Frontend expects `VITE_API_BASE_URL` and `VITE_CESIUM_TOKEN` pointing at the bac
 2. Deploy frontend on Vercel:
    - Add env `VITE_API_BASE_URL` and `VITE_CESIUM_TOKEN`
    - Redeploy so API calls hit the hosted backend.
+
+## 👥 Contributors
+
+This project was built collaboratively with:
+
+- [darksunnp](https://github.com/darksunnp)
+- [thestuti](https://github.com/thestuti)
+- [Gun4shot](https://github.com/Gun4shot)
+- [gausele](https://github.com/gausele)
+- [fianko-codes](https://github.com/fianko-codes)
