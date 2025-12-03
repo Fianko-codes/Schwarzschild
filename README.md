@@ -48,3 +48,4 @@ This project was built collaboratively with:
 - [Gun4shot](https://github.com/Gun4shot)
 - [gausele](https://github.com/gausele)
 - [fianko-codes](https://github.com/fianko-codes)
+- [Scartissue](https://github.com/imscartissue)
